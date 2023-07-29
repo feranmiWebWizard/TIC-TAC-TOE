@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.3/lottie.min.js"></script>
+
+    <title>TIC-TAC-TOE</title>
+</head>
+<body>
+    <div id="menu-section" class="menu_section flex">
+        <!-- start game menu content goes here -->
+        <div id="" class="menu_content">
+            <img src="images/game-menu.png" class="game_menu_image" alt="game-menu-image">
+            <button id="main-menu-btn" class="menu_btn">Click here</button>
+        </div>
+
+    </div>
+
+    <div id="character-selection-section" class="character_selection_section hidden">
+        <!-- character selection content goes here -->
+        <div id="" class="character_selection">
+            <h2 id="player-id" class="text_medium"></h2>
+            <h1 class="text_large">SELECT AVATAR</h1>
+            <div class="characters">
+                <div id="sheep-animation" class="character_item" data-character="sheep"></div>
+                <div id="panda-animation" class="character_item" data-character="panda"></div>
+                <div id="turtle-animation" class="character_item" data-character="turtle"></div>
+                <div id="llama-animation" class="character_item" data-character="llama"></div>
+                <div id="crocodile-animation" class="character_item" data-character="crocodile"></div>
+            </div>
+        </div>
+        <button id="back-btn" class="back_btn">BACK</button>
+        <button id="game-section-btn" class="game_section_btn">NEXT</button>
+    </div>
+
+    <div id="game-section hidden">
+        <!-- Game content goes here -->
+    </div>
+</body>
+</html>
