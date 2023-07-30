@@ -36,8 +36,42 @@
         <button id="game-section-btn" class="game_section_btn">NEXT</button>
     </div>
 
-    <div id="game-section hidden">
+    <div id="game-section" class="game_section_section hidden">
         <!-- Game content goes here -->
+        <div class="game_section">
+            <div class="avatar_section">
+                <div >
+                    <div id="player-one-avatar" class=""></div>
+                    <p class="text_medium player_name">PLAYER 1</p>
+                </div>
+                <div >
+                    <div id="player-two-avatar" class=""></div>
+                    <p class="text_medium player_name">PLAYER 2</p>
+                </div>
+            </div>
+            <div class="game_board x" id="game_board">
+                <div class="cell"data-cell></div>
+                <div class="cell"data-cell></div>
+                <div class="cell"data-cell></div>
+                <div class="cell"data-cell></div>
+                <div class="cell"data-cell></div>
+                <div class="cell"data-cell></div>
+                <div class="cell"data-cell></div>
+                <div class="cell"data-cell></div>
+                <div class="cell"data-cell></div>
+
+            </div>
+            <div id="popup" class="popup hidden">
+                <div class="popup-content">
+                  <h2 id="popup-result"></h2>
+                  <button class="restart_btn" id="restart-btn">Restart</button>
+                </div>
+              </div>
+              
+           
+        </div>
+        <div></div>
+        <div></div>
     </div>
 </body>
 </html>

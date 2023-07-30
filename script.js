@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const gameSection = document.getElementById('game-section');
     const mainMenuBtn = document.getElementById('main-menu-btn');
     const backBtn = document.getElementById('back-btn')
+    const gameSectionBtn = document.getElementById('game-section-btn')
 
      // function to show main selection section and hide others
      function showMainSection() { 
@@ -24,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function showGameSection() {
         menuSection.classList.remove('flex');
         menuSection.classList.add('hidden');
+        characterSelectionSection.classList.add('hidden');
         gameSection.classList.remove('hidden')
     }
    
@@ -33,6 +35,9 @@ document.addEventListener('DOMContentLoaded', function () {
      })
 
     //  button click to show game select section
+    gameSectionBtn.addEventListener('click', function () {
+      showGameSection()
+    })
 
     // back button on character selection page
     backBtn.addEventListener('click', function () {
@@ -72,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
     showAnimation(sheep, sheepPath);
     showAnimation(panda, pandaPath);
     showAnimation(turtle, turtlePath);
-
+    
 
     // store player one's data
     let playerOne = {
@@ -85,9 +90,6 @@ document.addEventListener('DOMContentLoaded', function () {
         avatar: '',
         name: 'playerTwo',
     };
-
-    // function to show which players have selected avatars
-
 
     // function to update each player's data
     function updatePlayerData(player, avatar){
@@ -128,6 +130,17 @@ let playerTwoSelected = false;
         avatarSelectionEnabled = false; // Disable further avatar selection
       }
     }
+   // Update the game area with the selected avatars
+  if (player === playerOne) {
+    const playerOneAvatar = document.getElementById('player-one-avatar');
+    playerOneAvatar.innerHTML = ''; // Clear any previous avatar
+    playerOneAvatar.appendChild(character.cloneNode(true));
+  } else {
+    const playerTwoAvatar = document.getElementById('player-two-avatar');
+    playerTwoAvatar.innerHTML = ''; // Clear any previous avatar
+    playerTwoAvatar.appendChild(character.cloneNode(true));
+  }
+
   }
   
 
@@ -160,6 +173,112 @@ let playerTwoSelected = false;
           }
     })
 
+    // game logic code
+
+    const x_class = 'x';
+    const circle_class = 'circle';
+    const cellElements = document.querySelectorAll('[data-cell]');
+    const winningPopup = document.getElementById('popup');
+    const board = document.getElementById('game_board');
+    const winningMessage = document.getElementById('popup-result');
+    const restartBtn = this.getElementById('restart-btn');
+    const winning_combination = [
+      // horizontal combinations
+      [0, 1, 2], 
+      [3, 4, 5], 
+      [6, 7, 8], 
+      // vertical combinations
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      // diagonal combinations
+      [0, 4, 8],
+      [6, 4, 2]
+    ];
+
+    let circleTurn = false;
+
+      cellElements.forEach(cell => {
+        cell.addEventListener('click', handleClick, {once: true})
+      })
+      setBoardHoverClass();
+   
+    restartBtn.addEventListener('click', startGame);
+
+    function startGame() {
+      let circleTurn = false;
+      cellElements.forEach(cell => {
+        cell.classList.remove(x_class)
+        cell.classList.remove(circle_class)
+        cell.removeEventListener('click', handleClick)
+        cell.addEventListener('click', handleClick, {once: true})
+      })
+      setBoardHoverClass();
+      winningPopup.classList.remove('flex')   
+    }
+
+    function handleClick(e) {
+      const cell = e.target;
+      const currentClass = circleTurn ? circle_class : x_class;
+      placeMark(cell, currentClass);
+
+      if (checkWin(currentClass)){
+        endGame(false)
+      } else if (isDraw()){
+        endGame(true)
+      } else {
+        swapTurns();
+        setBoardHoverClass();
+      }
+      
+     
+    }
+
+    function endGame(draw){
+      if (draw){
+       winningMessage.innerText = 'Draw!'
+      } else {
+        winningMessage.innerText = `${circleTurn ? "PLAYER 2" : "PLAYER 1"} WINS`
+      }
+      winningPopup.classList.add('flex')
+
+    }
+
+    function isDraw(){
+      return [...cellElements].every(cell => {
+        return cell.classList.contains(x_class) || 
+        cell.classList.contains(circle_class)
+      })
+    }
+
+
+    function placeMark(cell, currentClass){
+      cell.classList.add(currentClass);
+
+    };
+    
+    function swapTurns(){
+      circleTurn = !circleTurn
+    };
+
+    function setBoardHoverClass() {
+      board.classList.remove(x_class);
+      board.classList.remove(circle_class);
+      if (circleTurn) {
+        board.classList.add(circle_class)
+      } else {
+        board.classList.add(x_class)
+      }
+
+    }
+
+    function checkWin(currentClass) {
+      return winning_combination.some(combination => {
+        return combination.every(index => {
+          return cellElements[index].classList.contains(currentClass)
+        })
+      })
+    }
 })
 
 
